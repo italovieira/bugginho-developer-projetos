@@ -15,7 +15,7 @@ end
 
 local ls = function (guests)
     if next(guests) == nil then
-        print "It's empty."
+        print 'It is empty.'
     else
         for i, guest in ipairs(guests) do
             print(i .. ':')
@@ -27,12 +27,16 @@ local ls = function (guests)
 end
 
 local add = function (name, cpf)
-    table.insert(guests, {['name'] = name, ['cpf'] = cpf})
+    guest = {
+        ['name'] = name,
+        ['cpf'] = cpf
+    }
+    table.insert(guests, guest)
 end
 
 local search = function (str)
     if next(guests) == nil then
-        print "It's empty."
+        print 'It is empty.'
     else
         for i, guest in ipairs(guests) do
             if string.find(guest.cpf, str) then
@@ -40,7 +44,7 @@ local search = function (str)
                 print('  ' .. 'name:' .. guest.name)
                 print('  ' .. 'cpf:'.. guest.cpf)
             else
-                print "No results found."
+                print 'No results found.'
             end
         end
     end
@@ -73,15 +77,15 @@ local file_removed_guests = 'removed.json'
 guests = load_data(file)
 removed_guests = load_data(file_removed_guests)
 
-print "1: list"
-print "2: add"
-print "3: search"
-print "4: remove"
-print "5: help"
-print "6: quit"
-
 while true do
-    io.write("What now% ")
+    print '*** Commands ***'
+    print '1: list'
+    print '2: add'
+    print '3: search'
+    print '4: remove'
+    print '5: help'
+    print '6: quit'
+    io.write('What now% ')
     local o = io.read()
 
     if o == '1' or string.match('list', '^' .. o) then
@@ -94,7 +98,7 @@ while true do
         elseif o == '2' or string.match('removed guests', '^' .. o) then
             ls(removed_guests)
         else
-            io.stderr:write("Invalid option\n")
+            io.stderr:write('Invalid option\n')
         end
     elseif o == '2' or string.match('add', '^' .. o) then
         io.write('Name: ')
@@ -116,16 +120,16 @@ while true do
         local reason = io.read()
         rm(id, reason)
     elseif o == '5' or string.match('help', '^' .. o) then
-        print "list   - list party guests"
-        print "add    - add party guests"
-        print "search - search party guests by CPF"
-        print "remove - remove a party guests by id"
+        print 'list   - list party guests'
+        print 'add    - add party guests'
+        print 'search - search party guests by CPF'
+        print 'remove - remove a party guests by id'
     elseif o == '6' or string.match('quit', '^' .. o) then
         save(guests, file)
         save(removed_guests, file_removed_guests)
         print 'Bye.'
         os.exit()
     else
-        io.stderr:write("Invalid option\n")
+        io.stderr:write('Invalid option\n')
     end
 end
