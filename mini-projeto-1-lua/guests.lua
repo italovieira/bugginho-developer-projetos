@@ -27,7 +27,7 @@ local ls = function (guests)
 end
 
 local add = function (name, cpf)
-    guest = {
+    local guest = {
         ['name'] = name,
         ['cpf'] = cpf
     }
@@ -86,13 +86,14 @@ while true do
     print '5: help'
     print '6: quit'
     io.write('What now% ')
+
     local o = io.read()
 
     if o == '1' or string.match('list', '^' .. o) then
         print('1: guests')
         print('2: removed guests')
         io.write('What now% ')
-        local o = io.read()
+        o = io.read()
         if o == '1' or string.match('guests', '^' .. o) then
             ls(guests)
         elseif o == '2' or string.match('removed guests', '^' .. o) then
@@ -100,16 +101,19 @@ while true do
         else
             io.stderr:write('Invalid option\n')
         end
+
     elseif o == '2' or string.match('add', '^' .. o) then
         io.write('Name: ')
-        name = io.read()
+        local name = io.read()
         io.write('CPF: ')
-        cpf = io.read()
+        local cpf = io.read()
         add(name, cpf)
+
     elseif o == '3' or string.match('search', '^' .. o) then
         io.write('Search for CPF: ')
-        str = io.read()
+        local str = io.read()
         search(str)
+
     elseif o == '4' or string.match('remove', '^' .. o) then
         local id
         repeat
@@ -119,11 +123,13 @@ while true do
         io.write('Reason: ')
         local reason = io.read()
         rm(id, reason)
+
     elseif o == '5' or string.match('help', '^' .. o) then
         print 'list   - list party guests'
         print 'add    - add party guests'
         print 'search - search party guests by CPF'
         print 'remove - remove a party guests by id'
+
     elseif o == '6' or string.match('quit', '^' .. o) then
         save(guests, file)
         save(removed_guests, file_removed_guests)
